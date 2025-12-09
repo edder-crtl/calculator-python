@@ -1,0 +1,142 @@
+import datetime
+
+
+
+
+##global 
+opcion=None
+
+#funciones#
+
+def tiempo():
+    regristro=datetime.datetime.now()
+    return regristro
+
+def suma(a,b):
+    resultado=a+b
+    guardar_historial(f'{a}+{b}={resultado}', tiempo())
+    return resultado
+
+def resta(a,b):
+    resultado=a-b
+    guardar_historial(f"{a}-{b}={resultado}", tiempo())
+    return resultado
+
+def multiplicacion(a,b):
+    resultado=a*b
+    guardar_historial(f"{a}*{b}={resultado}",tiempo())
+    return resultado
+
+def division (a,b):
+    resultado=a/b
+    guardar_historial(f"{a}/{b}={resultado}",tiempo())
+    return resultado
+def porcentaje(a,b):
+    resultado= float(a*b)/100 
+    guardar_historial(f"{a}&{b}={resultado}",tiempo())
+    return resultado
+
+def cuadratica (a):
+    resultado=a*a
+    guardar_historial(f"{a}^2={resultado}",tiempo())
+    return resultado
+
+def guardar_historial(resultado, registro):
+    with open('historial.txt','a') as historia:
+        historia.write(f'fecha:{registro}\nresultado:{resultado}\n')
+
+
+
+def confirmacion():
+    input('presione enter para continuar')
+
+
+
+
+
+#menu#1
+while opcion !=0:
+    try:
+        opcion=int(input("""selecione su opcion: \n 0.salir \n 1.suma \n 2.resta \n 3.multiplicacion \n 4.division \n 5.porcentaje \n 6.cuadratica \n 7. mostrar historial \n 8.borrar historial \n """))
+        if opcion in [1,2,3,4]:
+            while(True):
+                try:
+                    a=float(input("ingrese su primer digito: "))
+                    b=float(input("ingrese su segundo digito: "))
+                    
+                except:
+                    print('ingrese un numero valido')
+
+
+                if opcion==1:
+                    print(f"resultado: {suma(a,b)}")
+                    confirmacion()
+                    break
+
+
+                elif opcion==2:
+                    print(f"resultado:{resta(a,b)}")
+                    confirmacion()
+                    break
+
+
+                elif opcion==3:
+                    print(f"resultado:{multiplicacion(a,b)}")
+                    confirmacion()
+                    break
+
+
+                elif opcion==4:
+                    while b==0:
+                        try:
+                            b=float(input('ingrese un valor valido'))
+                        except ValueError:
+                            print('ingrese un valor valido')
+                    print(f'el resultado es: {division(a,b)}')
+                    confirmacion()
+                    break
+
+
+        elif opcion==5:
+            while(True):
+                try:
+                    a=float(input("ingrese el numero "))
+                    b=float(input("ingrese el segundo numero "))
+                    print(f"resultado:{porcentaje(a,b)}")
+                    confirmacion()
+                    break
+                except:
+                    print('ingrese un numero valido ')
+
+
+
+        elif opcion==6:
+            while(True):
+                try:
+                    a=float(input("ingrese el numero: "))
+                    print(f"resultado: ", {cuadratica(a)})
+                    confirmacion()
+                    break
+                except:
+                    print('error caracter invalido')
+
+        elif opcion == 7: 
+            with open("historial.txt", "r") as historial:
+                print("\nHistorial de operaciones:")
+                print(historial.read())
+                confirmacion()
+
+        elif opcion == 8:
+            open('historial.txt', 'w').close()
+            print('historial borrado con exito')
+            confirmacion()
+
+
+        else:
+            print('ingrese una opcion valida')
+            confirmacion()
+
+
+    except:
+        print("ingrese una opcion valida")
+        confirmacion()
